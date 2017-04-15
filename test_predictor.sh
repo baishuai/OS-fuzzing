@@ -1,3 +1,5 @@
+
+# ../test_predictor.sh zzuf.dataset
 for seed in $(seq 0 20); do
   python split.py $1 $seed
   vpredictor --out-file data/$seed/zzuf.pklz --train --dynamic data/$seed/train.csv > /dev/null

@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# ../get_testcases.sh /usr/bin    ## in sandbox dir
 printf "" > testcases.csv
 
 for bin in $(ls $@ | shuf); do
@@ -10,4 +11,4 @@ for bin in $(ls $@ | shuf); do
   fi
 done
 
-tcreator testcases.csv zzuf_testcases
+tcreator --batch testcases.csv zzuf_testcases
