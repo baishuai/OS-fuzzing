@@ -5,8 +5,6 @@ import csv
 import random
 
 
-from sklearn import cross_validation
-
 data_filename = sys.argv[1]
 seed = sys.argv[2]
 
@@ -17,6 +15,7 @@ test_filename = data_dir+"/test.csv"
 os.system("mkdir -p "+data_dir)
 
 random.seed(seed)
+print("seed", seed)
 
 programs = dict()
 vuln_programs, norm_programs = dict(), dict()
@@ -70,7 +69,7 @@ with open(data_filename, 'rb') as csvfile1:
     test_csv = csv.writer(csvfile3, delimiter='\t')
 
     for i,row in enumerate(reader1):
-      if (len(row) <> 3):
+      if (len(row) != 3):
         continue
       if row[0].split(":")[0]+":" in train_programs:
         train_csv.writerow(row)
@@ -78,34 +77,3 @@ with open(data_filename, 'rb') as csvfile1:
         test_csv.writerow(row)
       else:
         assert(0)
-
-one_out = random.sample(vuln_programs.keys(), 1)[0]
-
-#print one_out
- 
-train_programs = filter(lambda prog: not (one_out in prog), prog_sample)
-test_programs  = [one_out]
-
-train_filename = data_dir+"/train-one-out.csv"
-test_filename = data_dir+"/test-one-out.csv"
-
-# we read the list of all programs
-with open(data_filename, 'rb') as csvfile1:
- with open(train_filename, 'wb') as csvfile2:
-  with open(test_filename, 'wb') as csvfile3:
-
-    reader1 = csv.reader(csvfile1, delimiter='\t')
-    train_csv = csv.writer(csvfile2, delimiter='\t')
-    test_csv = csv.writer(csvfile3, delimiter='\t')
-
-    for i,row in enumerate(reader1):
-      if (len(row) <> 3):
-        continue
-      if row[0].split(":")[0]+":" in train_programs:
-        train_csv.writerow(row)
-      elif row[0].split(":")[0]+":" in test_programs:
-        test_csv.writerow(row)
-      else:
-        assert(0)
- 
-
