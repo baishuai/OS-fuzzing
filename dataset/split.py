@@ -17,43 +17,20 @@ os.system("mkdir -p "+data_dir)
 random.seed(seed)
 print("seed", seed)
 
-programs = dict()
-vuln_programs, norm_programs = dict(), dict()
-vuln_testcases, norm_testcases = dict(),dict()
+programs = []
+
 
 csv.field_size_limit(sys.maxsize)
 
 # we read the list of all programs
-with open(data_filename, 'rb') as csvfile1:
-    reader1 = csv.reader(csvfile1, delimiter='\t')
-    
-    for i,row in enumerate(reader1):
-      if (len(row) <> 3):
-        continue
-           
-      if  (row[2] == '1'):
-        vuln_testcases[row[0]] = 1
-        vuln_programs[row[0].split(":")[0]+":"] = 1
-
-      elif  (row[2] == '0'):
-        norm_testcases[row[0]] = 1
-        norm_programs[row[0].split(":")[0]+":"] = 1
-
-      programs[row[0].split(":")[0]+":"] = 1
-
-#print vuln_testcases.keys(), len(vuln_testcases.keys())
-#print norm_testcases.keys(), len(norm_testcases.keys())
+with open(data_filename, 'rb') as csvfile:
+    reader = csv.reader(csvfile, delimiter='\t')
+    programs = [row[0].split(":")[0]+":" for row in reader]
 
 #vuln_size, norm_size = len(vuln_programs.keys()), len(norm_programs.keys())
-prog_size = len(programs.keys())
+prog_size = len(programs)
 
-#print vuln_programs.keys()
-#print norm_programs.keys()
-
-#vuln_sample = random.sample(vuln_programs.keys(), vuln_size) 
-#norm_sample = random.sample(norm_programs.keys(), norm_size) 
-
-prog_sample = random.sample(programs.keys(), prog_size) 
+prog_sample = random.sample(programs, prog_size)
 train_prop = 0.75
 
 train_programs = prog_sample[:int(train_prop*prog_size)]
