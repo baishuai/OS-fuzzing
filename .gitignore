@@ -8,6 +8,12 @@ dataset/data/*
 __pycache__/
 *.py[cod]
 
+# dataset
+dataset/data
+
+# intellij
+.idea
+
 # C extensions
 *.so
 
