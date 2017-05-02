@@ -8,46 +8,48 @@ def plt_speedup(tv, pv, height=5, width=15, fontsize=18):
     ax = fig.add_subplot(1, 1, 1)
     ax.axis('off')
 
+    stv = sum(tv)
+    spv = sum(pv)
     rectangles = {
-        'robust ' + format(tv[0] / sum(tv), '0.1%'): patches.Rectangle(
+        'robust ' + format(tv[0] / stv, '0.1%'): patches.Rectangle(
             (0, 0.5),
-            tv[0] / sum(tv), 0.28,
+            tv[0] / stv, 0.28,
             fill=True, facecolor='grey',
             linewidth=3
         ),
-        'buggy ' + format(tv[1] / sum(tv), '0.1%'): patches.Rectangle(
-            (tv[0] / sum(tv), 0.5),
-            tv[1] / sum(tv), 0.28,
+        'buggy ' + format(tv[1] / stv, '0.1%'): patches.Rectangle(
+            (tv[0] / stv, 0.5),
+            tv[1] / stv, 0.28,
             fill=True, facecolor='r',
             linewidth=3
         ),
-        format(pv[0] / sum(pv), '0.1%'): patches.Rectangle(
+        format(pv[0] / spv, '0.1%'): patches.Rectangle(
             (0, 0.2),
-            pv[0] / sum(pv), 0.28,
+            pv[0] / spv, 0.28,
             fill=True, facecolor='grey',
             linewidth=3
         ),
-        format(pv[1] / sum(pv), '0.1%'): patches.Rectangle(
-            (pv[0] / sum(pv), 0.2),
-            pv[1] / sum(pv), 0.28,
+        format(pv[1] / spv, '0.1%'): patches.Rectangle(
+            (pv[0] / spv, 0.2),
+            pv[1] / spv, 0.28,
             fill=True, facecolor='r',
             linewidth=3,
             edgecolor='black',
             hatch='/',
             linestyle='dashed'
         ),
-        format(pv[2] / sum(pv), '0.1%'): patches.Rectangle(
-            ((pv[0] + pv[1]) / sum(pv), 0.2),
-            pv[2] / sum(pv), 0.28,
+        format(pv[2] / spv, '0.1%'): patches.Rectangle(
+            ((pv[0] + pv[1]) / spv, 0.2),
+            pv[2] / spv, 0.28,
             fill=True, facecolor='r',
             linewidth=3,
             edgecolor='black',
             hatch='\\',
             linestyle='dashed'
         ),
-        format(pv[3] / sum(pv), '0.1%'): patches.Rectangle(
-            ((pv[0] + pv[1] + pv[2]) / sum(pv), 0.2),
-            pv[3] / sum(pv), 0.28,
+        format(pv[3] / spv, '0.1%'): patches.Rectangle(
+            ((pv[0] + pv[1] + pv[2]) / spv, 0.2),
+            pv[3] / spv, 0.28,
             fill=True, facecolor='y',
             linewidth=3
         )
@@ -62,11 +64,11 @@ def plt_speedup(tv, pv, height=5, width=15, fontsize=18):
                     fontsize=18, ha='center', va='center')
 
     speedup = (pv[2] / tv[1]) / ((pv[1] + pv[2]) / sum(pv))
-    speedup_str = "speedup: ({:.1%}/{:.1%}) / ({:.1%}+{:.1%}) = {:.1%}".format(pv[2] / sum(pv), tv[1] / sum(tv),
-                                                                               pv[1] / sum(pv), pv[2] / sum(pv),
+    speedup_str = "speedup: ({:.1%}/{:.1%}) / ({:.1%}+{:.1%}) = {:.1%}".format(pv[2] / spv, tv[1] / stv,
+                                                                               pv[1] / spv, pv[2] / spv,
                                                                                speedup)
     ax.annotate(speedup_str, xy=(0.5, 0.9), fontsize=22, ha='center', va='center')
-    plt.show()
+    # plt.show()
 
 
 if __name__ == '__main__':

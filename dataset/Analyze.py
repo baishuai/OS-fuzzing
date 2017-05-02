@@ -3,10 +3,11 @@ import os
 
 import numpy as np
 import pandas as pd
+
 from plt import plt_speedup
 
 
-def ana_plt(testf, predf):
+def Analyze(testf, predf):
     test = pd.read_table(testf, header=None)
     pred = pd.read_table(predf, header=None)
     testv = test[2]
@@ -20,7 +21,9 @@ def ana_plt(testf, predf):
     pv.append(tv[0] - pv[0])
     pv.append(len(np.where(sumv == 2)[0]))
     pv.append(tv[1] - pv[2])
-
+    tv = np.array(tv).astype(np.float64)
+    pv = np.array(pv).astype(np.float64)
+    print(tv, pv)
     plt_speedup(tv, pv)
 
 
@@ -36,3 +39,4 @@ if __name__ == '__main__':
     pred = option.dir + sep + 'pred.csv'
 
     ana_plt(test, pred)
+
