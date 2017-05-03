@@ -10,7 +10,7 @@ def split(data_filename, seed, target_dir = 'dataset'):
     test_filename = data_dir + "/test.csv"
 
     os.system("mkdir -p " + data_dir)
-    seed += 21
+    # seed += 21
     random.seed(seed)
 
     programs = dict()

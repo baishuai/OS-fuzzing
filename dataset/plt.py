@@ -10,26 +10,36 @@ def plt_speedup(tv, pv, height=5, width=15, fontsize=18):
 
     stv = sum(tv)
     spv = sum(pv)
-    rectangles = {
-        'robust ' + format(tv[0] / stv, '0.1%'): patches.Rectangle(
+
+    annotations = [
+        'robust ' + format(tv[0] / stv, '0.1%'),
+        'buggy ' + format(tv[1] / stv, '0.1%'),
+        format(pv[0] / spv, '0.1%'),
+        format(pv[1] / spv, '0.1%'),
+        format(pv[2] / spv, '0.1%'),
+        format(pv[3] / spv, '0.1%')
+    ]
+
+    rectangles = [
+        patches.Rectangle(
             (0, 0.5),
             tv[0] / stv, 0.28,
             fill=True, facecolor='grey',
             linewidth=3
         ),
-        'buggy ' + format(tv[1] / stv, '0.1%'): patches.Rectangle(
+        patches.Rectangle(
             (tv[0] / stv, 0.5),
             tv[1] / stv, 0.28,
             fill=True, facecolor='r',
             linewidth=3
         ),
-        format(pv[0] / spv, '0.1%'): patches.Rectangle(
+        patches.Rectangle(
             (0, 0.2),
             pv[0] / spv, 0.28,
             fill=True, facecolor='grey',
             linewidth=3
         ),
-        format(pv[1] / spv, '0.1%'): patches.Rectangle(
+        patches.Rectangle(
             (pv[0] / spv, 0.2),
             pv[1] / spv, 0.28,
             fill=True, facecolor='r',
@@ -38,7 +48,7 @@ def plt_speedup(tv, pv, height=5, width=15, fontsize=18):
             hatch='/',
             linestyle='dashed'
         ),
-        format(pv[2] / spv, '0.1%'): patches.Rectangle(
+        patches.Rectangle(
             ((pv[0] + pv[1]) / spv, 0.2),
             pv[2] / spv, 0.28,
             fill=True, facecolor='r',
@@ -47,20 +57,20 @@ def plt_speedup(tv, pv, height=5, width=15, fontsize=18):
             hatch='\\',
             linestyle='dashed'
         ),
-        format(pv[3] / spv, '0.1%'): patches.Rectangle(
+        patches.Rectangle(
             ((pv[0] + pv[1] + pv[2]) / spv, 0.2),
             pv[3] / spv, 0.28,
             fill=True, facecolor='y',
             linewidth=3
         )
-    }
+    ]
 
-    for r in rectangles:
-        ax.add_artist(rectangles[r])
-        rx, ry = rectangles[r].get_xy()
-        cx = rx + rectangles[r].get_width() / 2.0
-        cy = ry + rectangles[r].get_height() / 2.0
-        ax.annotate(r, (cx, cy), color='black', weight='bold',
+    for (a, r) in zip(annotations, rectangles):
+        ax.add_artist(r)
+        rx, ry = r.get_xy()
+        cx = rx + r.get_width() / 2.0
+        cy = ry + r.get_height() / 2.0
+        ax.annotate(a, (cx, cy), color='black', weight='bold',
                     fontsize=18, ha='center', va='center')
 
     speedup = (pv[2] / tv[1]) / ((pv[1] + pv[2]) / sum(pv))
