@@ -10,6 +10,8 @@ __pycache__/
 
 # dataset
 dataset/data
+dataset/testcases.csv
+dataset/zzuf.dataset
 
 # intellij
 .idea
